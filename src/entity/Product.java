@@ -7,10 +7,6 @@ package entity;
 
 import java.io.Serializable;
 
-/**
- *
- * @author TrongDuyDao
- */
 public class Product implements Serializable {
     
     private String code, name;
