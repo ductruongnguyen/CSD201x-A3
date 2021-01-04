@@ -1,7 +1,6 @@
 package util;
 
 public class Node<T> {
-    
     public T info;
     public Node<T> left, right;
     

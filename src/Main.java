@@ -1,6 +1,59 @@
+import entity.Product;
+
+import java.util.Scanner;
+
 public class Main {
+
+    static MyProduct myProduct = new MyProduct();
 	
     public static void main(String[] args) {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+        boolean flag = true;
+        while (flag) {
+            showMenu();
+            Scanner sc = new Scanner(System.in);
+            int chooseNumber = Integer.parseInt(sc.nextLine());
+            switch (chooseNumber) {
+                case 1:
+                    System.out.println("Enter product's information(Code, Name, Quantity, Saled, Price): ");
+                    String[] productArr = sc.nextLine().split(",");
+                    Product product = new Product(productArr[0].trim(), productArr[1].trim(), Integer.parseInt(productArr[2].trim()),
+                            Integer.parseInt(productArr[3].trim()), Double.parseDouble(productArr[4].trim()));
+                    myProduct.insert(product);
+                    break;
+                case 2:
+                    System.out.println(String.format("%-10s%-20s%-10d%-10d%-10.2f", "Code", "Name", "Quantity" , "Saled" , "Price"));
+                    myProduct.inOrder();
+                    break;
+                case 3:
+                    System.out.println(String.format("%-10s%-20s%-10d%-10d%-10.2f", "Code", "Name", "Quantity" , "Saled" , "Price"));
+                    myProduct.BFT();
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 0:
+                    flag = false;
+                    break;
+            }
+        }
+    }
+
+    public static void showMenu() throws NumberFormatException {
+        String menu = "Product list: \n" +
+                "1. Insert a new product\n" +
+                "2. In-order travel\n" +
+                "3. Breath first travel\n" +
+                "4. Search by a product code\n" +
+                "5. Delete by a product code\n" +
+                "6. Simple balancing\n" +
+                "7. Count number of products\n" +
+                "0. Exit\n" +
+                "Your choice: ";
+        System.out.println(menu);
     }
 }

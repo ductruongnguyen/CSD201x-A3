@@ -9,8 +9,12 @@ public class MyBSTree {
 
     //a root of tree
     Node<Product> root;
-    
-    public MyBSTree() {
+
+	public Node<Product> getRoot() {
+		return root;
+	}
+
+	public MyBSTree() {
         root = null;
     }
 
@@ -24,7 +28,7 @@ public class MyBSTree {
     	return root == null;
     }
 
-    //in order a tree
+    //in-order traverse a tree
     public void inOrder(Node<Product> p) {
         if(p == null) return;
         inOrder(p.left);
@@ -41,30 +45,19 @@ public class MyBSTree {
     
     //breadth-first traverse a tree
     public void BFT() {
-    	
     	if(root == null) return; //fix
-    	
     	MyQueue q = new MyQueue();
-    	
     	q.enqueue(root); //fix
-
     	Node<Product> p;
 
     	while(!q.isEmpty()) {
-    		
     		p = (Node<Product>) q.dequeue();
-
 	    	if(p.left != null)
-	    	
-	    	q.enqueue(p.left);
-	    	
+	    		q.enqueue(p.left);
 	    	if(p.right != null)
-	    		
-	    	q.enqueue(p.right);
-	    	
+	    		q.enqueue(p.right);
 	    	visit(p);
     	}
-    	
     }
     
     //insert a new Product to a tree
@@ -81,8 +74,7 @@ public class MyBSTree {
     	f = null;
 
     	while(p != null) {
-    		
-			if(p.info == product){
+			if(p.info == product) {
 				System.out.println("The product " + product.getName() + " already exists, no insertion");
 				return;
 			}
@@ -90,21 +82,16 @@ public class MyBSTree {
 	    	f = p;
 	
 	    	if(product.getCode().compareTo(p.info.getCode()) < 0)
-	
-	    	p = p.left;
+	    		p = p.left;
 	
 	    	else
-	
-	    	p = p.right;
-
+	    		p = p.right;
     	}
 
     	if(product.getCode().compareTo(f.info.getCode()) < 0)
-
     		f.left = new Node(product);
 
     	else
-
     		f.right = new Node(product);
     }
 

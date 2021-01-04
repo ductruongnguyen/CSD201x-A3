@@ -17,11 +17,11 @@ public class MyProduct {
     
     //1.2 in-order traverse
     public void inOrder() {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+        tree.inOrder(tree.getRoot());
     }
     //1.3 BFT a tree
     public void BFT() {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+        tree.BFT();
     }
     //1.4 search a product by product code
     public void search() {
