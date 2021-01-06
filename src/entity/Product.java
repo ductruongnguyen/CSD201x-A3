@@ -67,7 +67,7 @@ public class Product implements Serializable {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Product) {
-            Product p = (Product)obj;
+            Product p = (Product) obj;
             return p.code.equalsIgnoreCase(this.code);
         }
         return false;

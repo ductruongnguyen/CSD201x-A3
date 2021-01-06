@@ -1,5 +1,6 @@
 import entity.Product;
 import util.MyBSTree;
+import util.Node;
 
 public class MyProduct {
     
@@ -24,8 +25,9 @@ public class MyProduct {
         tree.BFT();
     }
     //1.4 search a product by product code
-    public void search() {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+    public void search(String code) {
+        Node<Product> found = tree.search(tree.getRoot(), code);
+        tree.visit(found);
     }
     //1.5 delete a product by product code
     public void delete() {
@@ -37,6 +39,6 @@ public class MyProduct {
     }
     //1.7 count the number of products in the tree
     public int size() {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+        return tree.count(tree.getRoot());
     }
 }

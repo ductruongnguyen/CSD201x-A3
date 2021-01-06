@@ -21,20 +21,25 @@ public class Main {
                     myProduct.insert(product);
                     break;
                 case 2:
-                    System.out.println(String.format("%-10s%-20s%-10d%-10d%-10.2f", "Code", "Name", "Quantity" , "Saled" , "Price"));
+                    System.out.printf("%-10s%-20s%-10s%-10s%-10s%n", "Code", "Name", "Quantity" , "Saled" , "Price");
                     myProduct.inOrder();
                     break;
                 case 3:
-                    System.out.println(String.format("%-10s%-20s%-10d%-10d%-10.2f", "Code", "Name", "Quantity" , "Saled" , "Price"));
+                    System.out.printf("%-10s%-20s%-10s%-10s%-10s%n", "Code", "Name", "Quantity" , "Saled" , "Price");
                     myProduct.BFT();
                     break;
                 case 4:
+                    System.out.println("Enter product's code: ");
+                    String pCode = sc.nextLine();
+                    System.out.printf("%-10s%-20s%-10s%-10s%-10s%n", "Code", "Name", "Quantity" , "Saled" , "Price");
+                    myProduct.search(pCode);
                     break;
                 case 5:
                     break;
                 case 6:
                     break;
                 case 7:
+                    System.out.println("Total number of products are: " + myProduct.size());
                     break;
                 case 0:
                     flag = false;

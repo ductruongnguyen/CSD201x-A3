@@ -112,7 +112,7 @@ public class MyBSTree {
     	if(f > l) {
     		return;
     	}
-    	int  mid =(f + l)/2;
+    	int  mid = (f + l)/2;
     	Node<Product> p = list.get(mid);
     	insert(p.info);
     	balance(list, f, mid - 1);
@@ -129,10 +129,22 @@ public class MyBSTree {
 
     //search a Node of tree by product code
     //return null if given code does not exists
+	public Node<Product> search(Node<Product> p, String code) {
+
+		if(p==null) return(null);
+
+		if(p.info.getCode().equals(code)) return(p);
+
+		if(code.compareTo(p.info.getCode()) < 0)
+			return(search(p.left, code));
+		else
+			return(search(p.right, code));
+	}
+
     public Node<Product> search(Node<Product> note, String code, Node<Product> leftParent, Node<Product> rightParent) {
-    	
+
     	String bBcode = note.info.getCode();
-    	
+
     	if(note == null) {
     		return null;
     	}
