@@ -40,14 +40,22 @@ public class MyBSTree {
     public int count(Node<Product> root) {
     	if(isEmpty())
     		return 0;
-    	return 1  + count(root.left) + count(root.right);
+
+		int count = 1;
+
+    	if(root.left != null)
+    		return count + count(root.left);
+    	if(root.right != null)
+    		return count + count(root.right);
+
+    	return count;
     }
     
     //breadth-first traverse a tree
     public void BFT() {
-    	if(root == null) return; //fix
+    	if(root == null) return;
     	MyQueue q = new MyQueue();
-    	q.enqueue(root); //fix
+    	q.enqueue(root);
     	Node<Product> p;
 
     	while(!q.isEmpty()) {
@@ -128,7 +136,6 @@ public class MyBSTree {
     }
 
     //search a Node of tree by product code
-    //return null if given code does not exists
 	public Node<Product> search(Node<Product> p, String code) {
 
 		if(p==null) return(null);
