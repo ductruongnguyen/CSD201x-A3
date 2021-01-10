@@ -13,7 +13,11 @@ public class MyProduct {
     
     //1.1 input and insert a new product to tree
     public void insert(Product product) {
-        tree.insert(product);
+        if(tree.getRoot() == null) {
+            tree.setRoot(new Node<Product>(product));
+            System.out.println("Root node " + product.getCode() + " is created!");
+        }
+        tree.insert(tree.getRoot(), product);
     }
     
     //1.2 in-order traverse
@@ -27,6 +31,10 @@ public class MyProduct {
     //1.4 search a product by product code
     public void search(String code) {
         Node<Product> found = tree.search(tree.getRoot(), code);
+        if(found == null) {
+            System.out.println("There are no matching products");
+            return;
+        }
         tree.visit(found);
     }
     //1.5 delete a product by product code

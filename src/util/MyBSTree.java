@@ -14,6 +14,10 @@ public class MyBSTree {
 		return root;
 	}
 
+	public void setRoot(Node<Product> root) {
+		this.root = root;
+	}
+
 	public MyBSTree() {
         root = null;
     }
@@ -40,9 +44,9 @@ public class MyBSTree {
 		int count = 1;
 
     	if(root.left != null)
-    		return count + count(root.left);
+    		count += count(root.left);
     	if(root.right != null)
-    		return count + count(root.right);
+    		count += count(root.right);
 
     	return count;
     }
@@ -64,42 +68,18 @@ public class MyBSTree {
     	}
     }
 
-    public void insert(Product product) {
+    public Node<Product> insert(Node<Product> root, Product product) {
     	if(root == null) {
-    		root = new Node(product);
-			System.out.println("Root node " + product.getCode() + " created!");
-    		return;
+    		root = new Node<Product>(product);
+			System.out.println("Node " + product.getCode() + " inserted!");
+    		return root;
     	}
-
-    	Node<Product> f, p;
-
-    	p = root;
-    	
-    	f = null;
-
-    	while(p != null) {
-			if(p.info.equals(product)) {
-				System.out.println("The product " + product.getName() + " already exists, no insertion");
-				return;
-			}
-
-	    	f = p;
-	
-	    	if(product.getCode().compareTo(p.info.getCode()) < 0)
-	    		p = p.left;
-	
-	    	else
-	    		p = p.right;
-    	}
-
-    	if(product.getCode().compareTo(f.info.getCode()) < 0) {
-			f.left = new Node(product);
-			System.out.println("Insert " + product.getCode() + " successfully");
-		} else {
-			f.right = new Node(product);
-			System.out.println("Insert " + product.getCode() + " successfully");
+    	if(product.getCode().compareTo(root.info.getCode()) < 0) {
+			root.left = insert(root.left, product);
+		} else if (product.getCode().compareTo(root.info.getCode()) > 0){
+			root.right = insert(root.right, product);
 		}
-
+    	return root;
     }
 
     //balance a tree
@@ -121,7 +101,7 @@ public class MyBSTree {
     	}
     	int  mid = (f + l)/2;
     	Node<Product> p = list.get(mid);
-    	insert(p.info);
+    	insert(root, p.info);
     	balance(list, f, mid - 1);
     	balance(list, mid + 1, l);
     }
@@ -131,7 +111,7 @@ public class MyBSTree {
         buildArray(list, root);
         MyBSTree tree = new MyBSTree();
         tree.balance(list, 0, list.size() - 1);
-        root = tree.root;
+		System.out.println("Tree is balanced!");
     }
 
     //search a Node of tree by product code
@@ -153,10 +133,6 @@ public class MyBSTree {
     }
 
     Node<Product> delete(Node<Product> root, String code) {
-		if(root == null) {
-			System.out.println("There is no root node");
-			return root;
-		}
 
 		if(code.compareTo(root.info.getCode()) < 0) {
 			root.left = delete(root.left, code);
@@ -175,20 +151,18 @@ public class MyBSTree {
 				return root.left;
 			}
 			else {
-				String minValue = minValue(root.right);
-				root.info.setCode(minValue);
-				root.right = delete(root.right, minValue);
+				Product minProduct = minValue(root.right);
+				root.info = minProduct;
+				root.right = delete(root.right, minProduct.getCode());
 			}
 		}
 		return root;
 	}
 
-	private String minValue(Node<Product> node) {
-		String minValue = node.info.getCode();
-		while (node.left != null) {
-			minValue = node.left.info.getCode();
-			node = node.left;
+	private Product minValue(Node<Product> node) {
+		if(node.left != null) {
+			return minValue(node.left);
 		}
-		return minValue;
+		return node.info;
 	}
 }
