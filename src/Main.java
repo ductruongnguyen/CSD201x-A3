@@ -60,9 +60,6 @@ public class Main {
                             myProduct.insert(p);
                         }
                         break;
-                    case 9:
-                        System.out.println("Root value: " + myProduct.tree.getRoot().info.getCode());
-                        break;
                     case 0:
                         flag = false;
                         break;
