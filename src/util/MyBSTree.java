@@ -1,5 +1,6 @@
 package util;
 
+import com.sun.org.apache.xpath.internal.objects.XNodeSet;
 import entity.Product;
 
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.List;
 
 public class MyBSTree {
 
-    //a root of tree
     Node<Product> root;
 
 	public Node<Product> getRoot() {
@@ -18,25 +18,21 @@ public class MyBSTree {
         root = null;
     }
 
-    //visit a node of a tree -> output information of visited node
     public void visit(Node<Product> p) {
         System.out.println(p.info);
     }
 
-    //return true if tree is empty otherwise return false
     public boolean isEmpty() {
     	return root == null;
     }
 
-    //in-order traverse a tree
     public void inOrder(Node<Product> p) {
         if(p == null) return;
         inOrder(p.left);
         visit(p);
         inOrder(p.right);
     }
-    
-    //count number of products
+
     public int count(Node<Product> root) {
     	if(isEmpty())
     		return 0;
@@ -67,8 +63,7 @@ public class MyBSTree {
 	    	visit(p);
     	}
     }
-    
-    //insert a new Product to a tree
+
     public void insert(Product product) {
     	if(root == null) {
     		root = new Node(product);
@@ -138,79 +133,58 @@ public class MyBSTree {
     //search a Node of tree by product code
 	public Node<Product> search(Node<Product> p, String code) {
 
-		if(p==null) return(null);
+		if (p == null) return (null);
 
-		if(p.info.getCode().equals(code)) return(p);
+		if (p.info.getCode().equals(code)) return (p);
 
-		if(code.compareTo(p.info.getCode()) < 0)
-			return(search(p.left, code));
+		if (code.compareTo(p.info.getCode()) < 0)
+			return (search(p.left, code));
 		else
-			return(search(p.right, code));
+			return (search(p.right, code));
 	}
-
-    public Node<Product> search(Node<Product> note, String code, Node<Product> leftParent, Node<Product> rightParent) {
-
-    	String bBcode = note.info.getCode();
-
-    	if(note == null) {
-    		return null;
-    	}
-    	if(bBcode.equalsIgnoreCase(code)) {
-    		return note;
-    	}
-    	if(bBcode.compareTo(code) > 0)
-    		return search(note.left, code, note, null);
-    	return search(note.right, code, null, note);
-    }
  
     //delete a node by a given product code
     public void delete(String code) {
-    	//lam sau
-    	Node<Product> leftParent = null;
-    	Node<Product> rightParent = null;
-    	Node<Product> note = search(root, code, leftParent, rightParent);
-    	
-    	if(note != null) {
-    		//case 1
-    		if(note.left == null && note.right == null) {
-    			if(leftParent != null) {
-    				leftParent.left = null;
-    			} else {
-    				rightParent.right = null;
-    			}
-    		}
-    		//case 2
-    		else if(note.left != null && note.right == null) {
-    			if(leftParent != null) {
-    				leftParent.left = note.left;
-    			} else {
-    				rightParent.right = note.left;
-    			}
-    		}
-    		
-    		else if(note.right != null && note.left == null) {
-    			if(leftParent != null) {
-    				leftParent.left = note.right;
-    			} else {
-    				rightParent.right = note.right;
-    			}
-    		}
-    		
-    		//case 3
-    		else if(note.left != null && note.right != null) {
-    			Node<Product> replace = getRightSuccessor(note);
-    			note.info = replace.info;
-    			
-    			delete(replace.info.getCode());
-    		}
-    	}
-    	
+    	delete(this.root, code);
     }
-    
-    public Node<Product> getRightSuccessor(Node<Product> note) {
-    	if(note.left == null) {
-    		return note;
-    	}
-    	return getRightSuccessor(note.left);
-    }
+
+    Node<Product> delete(Node<Product> root, String code) {
+		if(root == null) {
+			return root;
+		}
+		if(code.compareTo(root.info.getCode()) < 0) {
+			root.left = delete(root.left, code);
+		}
+		else if(code.compareTo(root.info.getCode()) > 0) {
+			root.right = delete(root.right, code);
+		}
+		else {
+			if(root.left == null && root.right == null) {
+				System.out.println("deleting " + code);
+				return null;
+			}
+			else if(root.left == null) {
+				System.out.println("deleting " + code);
+				return root.right;
+			}
+			else if(root.right == null) {
+				System.out.println("deleting " + code);
+				return root.left;
+			}
+			else {
+				String minValue = minValue(root.right);
+				root.info.setCode(minValue);
+				root.right = delete(root.right, minValue);
+				System.out.println("deleting " + code);
+			}
+		}
+		return root;
+	}
+
+	private String minValue(Node<Product> node) {
+		if(node.left != null) {
+			return minValue(node.left);
+		}
+		return node.info.getCode();
+	}
 }

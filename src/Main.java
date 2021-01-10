@@ -35,8 +35,13 @@ public class Main {
                     myProduct.search(pCode);
                     break;
                 case 5:
+                    System.out.println("Enter product's code to delete: ");
+                    String dCode = sc.nextLine();
+                    myProduct.delete(dCode);
                     break;
                 case 6:
+                    myProduct.balance();
+                    System.out.println("Tree is balanced!");
                     break;
                 case 7:
                     System.out.println("Total number of products are: " + myProduct.size());

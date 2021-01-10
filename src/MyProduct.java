@@ -30,12 +30,12 @@ public class MyProduct {
         tree.visit(found);
     }
     //1.5 delete a product by product code
-    public void delete() {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+    public void delete(String code) {
+        tree.delete(code);
     }
     //1.6 simply balancing a tree
     public void balance() {
-        throw new UnsupportedOperationException("Remove this line and implement your code here!");
+        tree.balance();
     }
     //1.7 count the number of products in the tree
     public int size() {
