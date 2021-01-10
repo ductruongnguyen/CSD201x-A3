@@ -67,6 +67,7 @@ public class MyBSTree {
     public void insert(Product product) {
     	if(root == null) {
     		root = new Node(product);
+			System.out.println("Root node " + product.getCode() + " created!");
     		return;
     	}
 
@@ -77,7 +78,7 @@ public class MyBSTree {
     	f = null;
 
     	while(p != null) {
-			if(p.info == product) {
+			if(p.info.equals(product)) {
 				System.out.println("The product " + product.getName() + " already exists, no insertion");
 				return;
 			}
@@ -91,11 +92,14 @@ public class MyBSTree {
 	    		p = p.right;
     	}
 
-    	if(product.getCode().compareTo(f.info.getCode()) < 0)
-    		f.left = new Node(product);
+    	if(product.getCode().compareTo(f.info.getCode()) < 0) {
+			f.left = new Node(product);
+			System.out.println("Insert " + product.getCode() + " successfully");
+		} else {
+			f.right = new Node(product);
+			System.out.println("Insert " + product.getCode() + " successfully");
+		}
 
-    	else
-    		f.right = new Node(product);
     }
 
     //balance a tree
@@ -150,8 +154,10 @@ public class MyBSTree {
 
     Node<Product> delete(Node<Product> root, String code) {
 		if(root == null) {
+			System.out.println("There is no root node");
 			return root;
 		}
+
 		if(code.compareTo(root.info.getCode()) < 0) {
 			root.left = delete(root.left, code);
 		}
@@ -160,31 +166,29 @@ public class MyBSTree {
 		}
 		else {
 			if(root.left == null && root.right == null) {
-				System.out.println("deleting " + code);
 				return null;
 			}
 			else if(root.left == null) {
-				System.out.println("deleting " + code);
 				return root.right;
 			}
 			else if(root.right == null) {
-				System.out.println("deleting " + code);
 				return root.left;
 			}
 			else {
 				String minValue = minValue(root.right);
 				root.info.setCode(minValue);
 				root.right = delete(root.right, minValue);
-				System.out.println("deleting " + code);
 			}
 		}
 		return root;
 	}
 
 	private String minValue(Node<Product> node) {
-		if(node.left != null) {
-			return minValue(node.left);
+		String minValue = node.info.getCode();
+		while (node.left != null) {
+			minValue = node.left.info.getCode();
+			node = node.left;
 		}
-		return node.info.getCode();
+		return minValue;
 	}
 }

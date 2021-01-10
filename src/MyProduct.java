@@ -31,7 +31,13 @@ public class MyProduct {
     }
     //1.5 delete a product by product code
     public void delete(String code) {
+        Node<Product> found = tree.search(tree.getRoot(), code);
+        if (found == null) {
+            System.out.println("There are no matching products");
+            return;
+        }
         tree.delete(code);
+        System.out.println("Delete product with " + code + " successfully!");
     }
     //1.6 simply balancing a tree
     public void balance() {
